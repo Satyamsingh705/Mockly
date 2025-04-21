@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tests - PrepExam</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/tests.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header Section -->
+  <header class="header">
+    <div class="container">
+      <div class="header-wrapper">
+        <div class="logo">
+          <a href="index.html">PrepExam</a>
+        </div>
+        <nav class="nav-menu">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tests.html" class="active">Tests</a></li>
+            <li><a href="categories.html">Categories</a></li>
+            <li><a href="quizzes.html">Quizzes</a></li>
+            <li><a href="about.html">About</a></li>
+          </ul>
+        </nav>
+        <div class="search-box">
+          <input type="text" placeholder="Search for tests..." id="search-tests">
+          <button class="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="mobile-menu-btn">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Title Section -->
+  <section class="page-title">
+    <div class="container">
+      <h1>Available Tests</h1>
+      <div class="breadcrumbs">
+        <a href="index.html">Home</a> / <span>Tests</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter Section -->
+  <section class="filter-section">
+    <div class="container">
+      <div class="filter-wrapper">
+        <div class="filter-group">
+          <label>Category:</label>
+          <select id="category-filter">
+            <option value="all">All Categories</option>
+            <option value="bank-po">Bank PO</option>
+            <option value="ssc-cgl">SSC CGL</option>
+            <option value="gate">GATE</option>
+            <option value="neet">NEET</option>
+            <option value="upsc">UPSC</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Duration:</label>
+          <select id="duration-filter">
+            <option value="all">All Durations</option>
+            <option value="short">Short (< 30 mins)</option>
+            <option value="medium">Medium (30-60 mins)</option>
+            <option value="long">Long (> 60 mins)</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Difficulty:</label>
+          <select id="difficulty-filter">
+            <option value="all">All Levels</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+        <button id="apply-filters" class="btn btn-primary">Apply Filters</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tests List Section -->
+  <section class="tests-list-section">
+    <div class="container">
+      <div class="tests-grid" id="tests-container">
+        <!-- Test cards will be dynamically populated here -->
+      </div>
+      <div class="pagination">
+        <button class="pagination-btn" id="prev-page" disabled><i class="fas fa-chevron-left"></i> Previous</button>
+        <div class="page-numbers" id="page-numbers">
+          <span class="current-page">1</span>
+          <span>2</span>
+          <span>3</span>
+        </div>
+        <button class="pagination-btn" id="next-page">Next <i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-wrapper">
+        <div class="footer-column">
+          <div class="footer-logo">PrepExam</div>
+          <p>Your one-stop solution for free online test preparation. Practice with our comprehensive test series and improve your scores.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tests.html">Tests</a></li>
+            <li><a href="categories.html">Categories</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Top Categories</h3>
+          <ul>
+            <li><a href="tests.html?category=bank-po">Bank PO</a></li>
+            <li><a href="tests.html?category=ssc-cgl">SSC CGL</a></li>
+            <li><a href="tests.html?category=gate">GATE</a></li>
+            <li><a href="tests.html?category=neet">NEET</a></li>
+            <li><a href="tests.html?category=upsc">UPSC</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Contact Us</h3>
+          <ul class="contact-info">
+            <li><i class="fas fa-map-marker-alt"></i> 123 Education Street, Learning City</li>
+            <li><i class="fas fa-phone"></i> +91 1234567890</li>
+            <li><i class="fas fa-envelope"></i> support@prepexam.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2023 PrepExam. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/tests.js"></script>
+</body>
+</html>

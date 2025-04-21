@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taking Test - PrepExam</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/test-interface.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="test-body">
+  <!-- Test Header -->
+  <header class="test-header">
+    <div class="test-info">
+      <h1 id="test-title">Loading Test...</h1>
+      <div class="test-meta" id="test-meta">
+        <span id="total-questions"><i class="fas fa-question-circle"></i> 0 Questions</span>
+        <span id="total-marks"><i class="fas fa-trophy"></i> 0 Marks</span>
+      </div>
+    </div>
+    <div class="test-controls">
+      <div class="timer-wrapper">
+        <div class="timer-icon">
+          <i class="fas fa-clock"></i>
+        </div>
+        <div class="timer" id="timer">00:00:00</div>
+      </div>
+      <button class="btn btn-danger" id="end-test">End Test</button>
+    </div>
+  </header>
+
+  <!-- Test Container -->
+  <div class="test-container">
+    <div class="question-sidebar">
+      <div class="user-info">
+        <h3>Test Navigation</h3>
+        <div class="test-status">
+          <div class="status-item">
+            <span class="status-dot answered"></span>
+            <span>Answered</span>
+          </div>
+          <div class="status-item">
+            <span class="status-dot not-answered"></span>
+            <span>Not Answered</span>
+          </div>
+          <div class="status-item">
+            <span class="status-dot marked"></span>
+            <span>Marked for Review</span>
+          </div>
+        </div>
+      </div>
+      <div class="question-palette" id="question-palette">
+        <!-- Question numbers will be dynamically populated here -->
+      </div>
+      <div class="palette-summary">
+        <div class="summary-item">
+          <span id="answered-count">0</span>
+          <span>Answered</span>
+        </div>
+        <div class="summary-item">
+          <span id="not-answered-count">0</span>
+          <span>Not Answered</span>
+        </div>
+        <div class="summary-item">
+          <span id="marked-count">0</span>
+          <span>Marked</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="question-container">
+      <div class="question-area" id="question-area">
+        <!-- Question content will be dynamically populated here -->
+      </div>
+      <div class="question-navigation">
+        <button class="btn btn-outline" id="prev-question">
+          <i class="fas fa-arrow-left"></i> Previous
+        </button>
+        <button class="btn btn-outline" id="mark-review">
+          <i class="fas fa-bookmark"></i> Mark for Review
+        </button>
+        <button class="btn btn-outline" id="clear-response">
+          <i class="fas fa-eraser"></i> Clear Response
+        </button>
+        <button class="btn btn-primary" id="next-question">
+          Next <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Test Submission Modal -->
+  <div class="modal" id="submit-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>End Test</h2>
+        <span class="close-modal" id="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to end the test?</p>
+        <div class="test-summary">
+          <div class="summary-row">
+            <span>Total Questions:</span>
+            <span id="modal-total">0</span>
+          </div>
+          <div class="summary-row">
+            <span>Answered:</span>
+            <span id="modal-answered">0</span>
+          </div>
+          <div class="summary-row">
+            <span>Not Answered:</span>
+            <span id="modal-not-answered">0</span>
+          </div>
+          <div class="summary-row">
+            <span>Marked for Review:</span>
+            <span id="modal-marked">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="cancel-submit">Cancel</button>
+        <button class="btn btn-danger" id="confirm-submit">Yes, End Test</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/timer.js"></script>
+  <script src="js/test-interface.js"></script>
+</body>
+</html>
