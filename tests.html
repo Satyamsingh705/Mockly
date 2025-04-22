@@ -87,16 +87,21 @@
   <!-- Tests List Section -->
   <section class="tests-list-section">
     <div class="container">
-      <div class="tests-grid" id="tests-container">
-        <!-- Test cards will be dynamically populated here -->
+            <div id="tests-container" class="tests-grid">
+        <!-- Test cards will be populated here -->
       </div>
+      
       <div class="pagination">
-        <button class="pagination-btn" id="prev-page" disabled><i class="fas fa-chevron-left"></i> Previous</button>
-        <div class="page-numbers" id="page-numbers">
-          <span class="current-page">1</span>
-          <span>2</span>
-          <span>3</span>
+        <button id="prev-page" class="pagination-btn" disabled>
+          <i class="fas fa-chevron-left"></i> Previous
+        </button>
+        <div id="page-numbers" class="page-numbers">
+          <!-- Page numbers will be populated here -->
         </div>
+        <button id="next-page" class="pagination-btn">
+          Next <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
         <button class="pagination-btn" id="next-page">Next <i class="fas fa-chevron-right"></i></button>
       </div>
     </div>

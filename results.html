@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,12 +6,411 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Test Results - Mockly</title>
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/results.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Essential Results Styles */
+    :root {
+      --primary-color: #1a73e8;
+      --secondary-color: #00c984;
+      --accent-color: #f39c12;
+      --danger-color: #e74c3c;
+      --text-dark: #333;
+      --text-medium: #666;
+      --bg-white: white;
+      --spacing-xs: 5px;
+      --spacing-sm: 10px;
+      --spacing-md: 15px;
+      --spacing-lg: 20px;
+      --spacing-xl: 30px;
+      --border-radius-md: 6px;
+      --border-radius-lg: 8px;
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+      --shadow-md: 0 4px 8px rgba(0,0,0,0.2);
+      --transition: all 0.3s ease;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      color: var(--text-dark);
+    }
+    
+    .container {
+      width: 92%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+    
+    /* Results Header */
+    .results-header {
+      background-color: var(--bg-white);
+      padding: var(--spacing-lg) 0;
+      margin-bottom: var(--spacing-lg);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .results-header h1 {
+      font-size: 2rem;
+      margin-bottom: var(--spacing-xs);
+    }
+    
+    .test-meta {
+      display: flex;
+      gap: var(--spacing-lg);
+      color: var(--text-medium);
+    }
+    
+    /* Score Summary */
+    .score-summary {
+      margin-bottom: var(--spacing-xl);
+    }
+    
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--spacing-lg);
+    }
+    
+    .summary-card {
+      background-color: var(--bg-white);
+      border-radius: var(--border-radius-lg);
+      padding: var(--spacing-lg);
+      display: flex;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .summary-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: var(--spacing-lg);
+      font-size: 1.5rem;
+    }
+    
+    .summary-card:nth-child(1) .summary-icon {
+      color: var(--primary-color);
+      background-color: rgba(26, 115, 232, 0.1);
+    }
+    
+    .summary-card:nth-child(2) .summary-icon {
+      color: var(--secondary-color);
+      background-color: rgba(52, 168, 83, 0.1);
+    }
+    
+    .summary-card:nth-child(3) .summary-icon {
+      color: var(--danger-color);
+      background-color: rgba(234, 67, 53, 0.1);
+    }
+    
+    .summary-card:nth-child(4) .summary-icon {
+      color: var(--text-medium);
+      background-color: rgba(95, 99, 104, 0.1);
+    }
+    
+    .summary-details h3 {
+      font-size: 1rem;
+      margin-bottom: 5px;
+      color: var(--text-medium);
+    }
+    
+    .score-display {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    
+    .total-score {
+      font-size: 1.2rem;
+      color: var(--text-medium);
+    }
+    
+    .score-percentage {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--primary-color);
+    }
+    
+    .score-count {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    
+    /* Performance Section */
+    .section-title {
+      font-size: 1.5rem;
+      margin-bottom: var(--spacing-md);
+      color: var(--text-dark);
+    }
+    
+    .performance-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-xl);
+    }
+    
+    .chart-container {
+      background-color: var(--bg-white);
+      border-radius: var(--border-radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-sm);
+      height: 300px;
+    }
+    
+    .chart-container h3 {
+      font-size: 1.1rem;
+      margin-bottom: var(--spacing-md);
+      color: var(--text-dark);
+      text-align: center;
+    }
+    
+    /* Section Analysis */
+    .section-analysis {
+      margin-bottom: var(--spacing-xl);
+    }
+    
+    .section-table {
+      background-color: var(--bg-white);
+      border-radius: var(--border-radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-sm);
+      overflow-x: auto;
+    }
+    
+    .section-table table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .section-table th, .section-table td {
+      padding: var(--spacing-sm) var(--spacing-md);
+      text-align: left;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .section-table th {
+      font-weight: 600;
+      color: var(--text-dark);
+      background-color: rgba(0, 0, 0, 0.03);
+    }
+    
+    /* Question Analysis */
+    .question-analysis {
+      margin-bottom: var(--spacing-xl);
+    }
+    
+    .analysis-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-weight: 500;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+    }
+    
+    .btn-outline {
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+      background-color: transparent;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .btn-secondary {
+      background-color: var(--secondary-color);
+      color: white;
+    }
+    
+    .questions-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-md);
+    }
+    
+    .question-item {
+      background-color: var(--bg-white);
+      border-radius: var(--border-radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .question-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .question-number {
+      font-weight: 500;
+    }
+    
+    .question-status {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    
+    .status-correct {
+      background-color: rgba(52, 168, 83, 0.1);
+      color: var(--secondary-color);
+    }
+    
+    .status-incorrect {
+      background-color: rgba(234, 67, 53, 0.1);
+      color: var(--danger-color);
+    }
+    
+    .status-not-attempted {
+      background-color: rgba(95, 99, 104, 0.1);
+      color: var(--text-medium);
+    }
+    
+    .question-text {
+      font-size: 1.1rem;
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .option-item {
+      padding: var(--spacing-sm);
+      border-radius: var(--border-radius-md);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-md);
+    }
+    
+    .option-marker {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      margin-top: 2px;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+    
+    .user-answer-label {
+      background-color: rgba(26, 115, 232, 0.1);
+      color: var(--primary-color);
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      margin-left: var(--spacing-sm);
+    }
+    
+    .correct-answer-label {
+      background-color: rgba(52, 168, 83, 0.1);
+      color: var(--secondary-color);
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      margin-left: var(--spacing-sm);
+    }
+    
+    .option-correct {
+      background-color: rgba(52, 168, 83, 0.05);
+      border: 1px solid rgba(52, 168, 83, 0.2);
+    }
+    
+    .option-incorrect {
+      background-color: rgba(234, 67, 53, 0.05);
+      border: 1px solid rgba(234, 67, 53, 0.2);
+    }
+    
+    .explanation {
+      background-color: #f5f5f5;
+      border-radius: var(--border-radius-md);
+      padding: var(--spacing-md);
+      margin-top: var(--spacing-md);
+    }
+    
+    .explanation h4 {
+      margin-bottom: var(--spacing-xs);
+      font-size: 0.9rem;
+      color: var(--text-dark);
+    }
+    
+    .explanation p {
+      font-size: 0.9rem;
+      color: var(--text-medium);
+    }
+    
+    /* Actions Section */
+    .actions-section {
+      margin-bottom: var(--spacing-xl);
+    }
+    
+    .buttons-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-lg);
+    }
+    
+    /* Responsive */
+    @media (max-width: 992px) {
+      .summary-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .performance-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .test-meta {
+        flex-direction: column;
+        gap: 5px;
+      }
+      .buttons-wrapper {
+        flex-direction: column;
+        align-items: center;
+      }
+      .buttons-wrapper .btn {
+        width: 100%;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .summary-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-  <!-- Header Section -->
+  <!-- Header -->
   <header class="header">
     <div class="container">
       <div class="header-wrapper">
@@ -26,30 +426,23 @@
             <li><a href="about.html">About</a></li>
           </ul>
         </nav>
-        <div class="search-box">
-          <input type="text" placeholder="Search for tests..." id="search-input">
-          <button class="search-btn"><i class="fas fa-search"></i></button>
-        </div>
-        <div class="mobile-menu-btn">
-          <i class="fas fa-bars"></i>
-        </div>
       </div>
     </div>
   </header>
 
-  <!-- Results Header -->
+  <!-- Results Header Section -->
   <section class="results-header">
     <div class="container">
       <h1 id="results-title">Test Results</h1>
-      <div class="test-meta" id="test-meta">
-        <span id="test-name"><i class="fas fa-file-alt"></i> Test Name</span>
-        <span id="test-date"><i class="fas fa-calendar-alt"></i> Date: </span>
-        <span id="test-duration"><i class="fas fa-clock"></i> Duration: </span>
+      <div class="test-meta">
+        <span id="test-name">Loading test data...</span>
+        <span id="test-date"><i class="fas fa-calendar-alt"></i> --/--/----</span>
+        <span id="test-duration"><i class="fas fa-clock"></i> -- mins</span>
       </div>
     </div>
   </section>
 
-  <!-- Score Summary -->
+  <!-- Score Summary Section -->
   <section class="score-summary">
     <div class="container">
       <div class="summary-cards">
@@ -58,12 +451,12 @@
             <i class="fas fa-trophy"></i>
           </div>
           <div class="summary-details">
-            <h3>Overall Score</h3>
+            <h3>Your Score</h3>
             <div class="score-display">
               <span id="overall-score">0</span>
-              <span class="total-score">/ 0</span>
+              <span class="total-score" id="total-score">/ 0</span>
+              <span class="score-percentage" id="percentage">0%</span>
             </div>
-            <div class="score-percentage" id="percentage">0%</div>
           </div>
         </div>
         <div class="summary-card">
@@ -72,7 +465,7 @@
           </div>
           <div class="summary-details">
             <h3>Correct Answers</h3>
-            <div class="score-count" id="correct-count">0</div>
+            <span class="score-count" id="correct-count">0</span>
           </div>
         </div>
         <div class="summary-card">
@@ -81,7 +474,7 @@
           </div>
           <div class="summary-details">
             <h3>Incorrect Answers</h3>
-            <div class="score-count" id="incorrect-count">0</div>
+            <span class="score-count" id="incorrect-count">0</span>
           </div>
         </div>
         <div class="summary-card">
@@ -90,48 +483,40 @@
           </div>
           <div class="summary-details">
             <h3>Not Attempted</h3>
-            <div class="score-count" id="not-attempted-count">0</div>
+            <span class="score-count" id="not-attempted-count">0</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Performance Section -->
+  <!-- Performance Charts Section -->
   <section class="performance-section">
     <div class="container">
-      <div class="section-header">
-        <h2>Performance Analysis</h2>
-      </div>
+      <h2 class="section-title">Performance Analysis</h2>
       <div class="performance-grid">
-        <div class="performance-chart">
+        <div class="chart-container">
           <h3>Score Distribution</h3>
-          <div class="chart-container">
-            <canvas id="score-chart"></canvas>
-          </div>
+          <canvas id="score-chart"></canvas>
         </div>
-        <div class="performance-chart">
+        <div class="chart-container">
           <h3>Time Spent per Section</h3>
-          <div class="chart-container">
-            <canvas id="time-chart"></canvas>
-          </div>
+          <canvas id="time-chart"></canvas>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Section-wise Analysis -->
+  <!-- Section Analysis Section -->
   <section class="section-analysis">
     <div class="container">
-      <div class="section-header">
-        <h2>Section-wise Analysis</h2>
-      </div>
+      <h2 class="section-title">Section-wise Analysis</h2>
       <div class="section-table">
         <table>
           <thead>
             <tr>
               <th>Section</th>
-              <th>Total Questions</th>
+              <th>Total</th>
               <th>Attempted</th>
               <th>Correct</th>
               <th>Incorrect</th>
@@ -140,92 +525,64 @@
             </tr>
           </thead>
           <tbody id="section-analysis-body">
-            <!-- Section analysis rows will be dynamically populated here -->
+            <!-- Section data will be inserted here -->
           </tbody>
         </table>
       </div>
     </div>
   </section>
 
-  <!-- Question Analysis -->
+  <!-- Question Analysis Section -->
   <section class="question-analysis">
     <div class="container">
-      <div class="section-header">
-        <h2>Question Analysis</h2>
-        <button class="toggle-answers btn btn-primary" id="toggle-answers">Show All Questions</button>
+      <div class="analysis-header">
+        <h2 class="section-title">Question Analysis</h2>
+        <button class="btn btn-outline" id="toggle-answers">Show Incorrect Only</button>
       </div>
       <div class="questions-list" id="questions-list">
-        <!-- Question analysis items will be dynamically populated here -->
+        <!-- Questions analysis will be inserted here -->
       </div>
     </div>
   </section>
 
   <!-- Action Buttons -->
-  <section class="action-buttons">
+  <section class="actions-section">
     <div class="container">
       <div class="buttons-wrapper">
-        <a href="tests.html" class="btn btn-outline">
-          <i class="fas fa-list"></i> View All Tests
+        <a href="index.html" class="btn btn-outline">
+          <i class="fas fa-home"></i> Back to Home
         </a>
-        <a href="#" class="btn btn-secondary" id="download-pdf">
+        <a href="#" id="download-pdf" class="btn btn-primary">
           <i class="fas fa-download"></i> Download Results
         </a>
-        <a href="index.html" class="btn btn-primary">
-          <i class="fas fa-home"></i> Back to Home
+        <a href="#" id="retry-test" class="btn btn-secondary">
+          <i class="fas fa-redo"></i> Retake Test
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Footer Section -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-wrapper">
-        <div class="footer-column">
-          <div class="footer-logo">Mockly</div>
-          <p>Your one-stop solution for free online test preparation. Practice with our comprehensive test series and improve your scores.</p>
-          <div class="social-links">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-          </div>
-        </div>
-        <div class="footer-column">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="tests.html">Tests</a></li>
-            <li><a href="categories.html">Categories</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-column">
-          <h3>Top Categories</h3>
-          <ul>
-            <li><a href="tests.html?category=bank-po">Bank PO</a></li>
-            <li><a href="tests.html?category=ssc-cgl">SSC CGL</a></li>
-            <li><a href="tests.html?category=gate">GATE</a></li>
-            <li><a href="tests.html?category=neet">NEET</a></li>
-            <li><a href="tests.html?category=upsc">UPSC</a></li>
-          </ul>
-        </div>
-        <div class="footer-column">
-          <h3>Contact Us</h3>
-          <ul class="contact-info">
-            <li><i class="fas fa-map-marker-alt"></i> 123 Education Street, Learning City</li>
-            <li><i class="fas fa-phone"></i> +91 1234567890</li>
-            <li><i class="fas fa-envelope"></i> support@Mockly.com</li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2023 Mockly. All Rights Reserved.</p>
-      </div>
-    </div>
-  </footer>
+  <!-- Debug Info Section (will be hidden in production) -->
+  <section id="debug-info" style="display: none; margin: 20px; padding: 20px; background: #f8f9fa; border: 1px solid #ddd;">
+    <h3>Debug Information</h3>
+    <div id="debug-content">Loading debug info...</div>
+  </section>
 
+  <script src="js/main.js"></script>
+  <script>
+    // Add this small debug script to help identify issues
+    window.addEventListener('error', function(e) {
+      const debugSection = document.getElementById('debug-info');
+      const debugContent = document.getElementById('debug-content');
+      
+      if (debugSection && debugContent) {
+        debugSection.style.display = 'block';
+        debugContent.innerHTML += `<p><strong>Error:</strong> ${e.message}</p>`;
+      }
+      
+      console.error('Caught error:', e);
+    });
+  </script>
   <script src="js/results.js"></script>
 </body>
 </html>
